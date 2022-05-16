@@ -145,6 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="Windows\EditWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -153,6 +157,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ValidationClass.cs" />
     <Compile Include="Windows\AdminWin.xaml.cs">
       <DependentUpon>AdminWin.xaml</DependentUpon>
     </Compile>
@@ -161,6 +166,9 @@
     </Compile>
     <Compile Include="Windows\DocWin.xaml.cs">
       <DependentUpon>DocWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditWin.xaml.cs">
+      <DependentUpon>EditWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

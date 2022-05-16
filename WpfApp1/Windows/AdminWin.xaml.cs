@@ -29,18 +29,17 @@ namespace WpfApp1.Windows
         public int Page { get; set; } = 0;
         public int RowAll { get; set; } = 0;
         public int RowAllTarif { get; set; } = 0;
+
         public void Update()
-        {            
-            ;
-            var datasourse =  entities.Doctors.Where(x => x.IDSpecialization > 0 && x.IDSpecialization < 15).ToList();
-            Assistents.ItemsSource = datasourse;
-            //RowAllTarif = tarifsours.Count();
-            //RowAll = datasourse.Count();
-            //datasourse = datasourse.Skip(Page * 10).Take(10).ToList();
-            //tarifsours = tarifsours.Skip(Page * 10).Take(10).ToList();
-            //Abonents.ItemsSource = datasourse;
-            //Tarifs.ItemsSource = tarifsours;
-            //var doctors = GetDoctors();
+        {
+
+            var datasourse = entities.Doctors.ToList();
+
+            RowAllTarif = datasourse.Count();
+            RowAll = datasourse.Count();
+            datasourse = datasourse.Skip(Page * 10).Take(10).ToList();
+            var doctors = GetDoctors();
+            adminList.ItemsSource = datasourse;
         }
         private void BackList_Click(object sender, RoutedEventArgs e)
         {
@@ -57,45 +56,31 @@ namespace WpfApp1.Windows
 
         private void NextList_Click(object sender, RoutedEventArgs e)
         {
-            //if (.IsChecked == true)
-            //{
-            //    Page++;
-            //    if ((10 * Page) < RowAll)
-            //    {
-            //        Update();
-            //    }
-            //    else
-            //    {
-            //        Page--;
-            //        Update();
-            //        MessageBox.Show("Открыта последняя страница", "Выборка", MessageBoxButton.OK, MessageBoxImage.Information);
-            //    };
-            //}
-            //else if (TarifRadio.IsChecked == true)
-            //{
-            //    Page++;
-            //    if ((10 * Page) < RowAllTarif)
-            //    {
-            //        Update();
-            //    }
-            //    else
-            //    {
-            //        Page--;
-            //        Update();
-            //        MessageBox.Show("Открыта последняя страница", "Выборка", MessageBoxButton.OK, MessageBoxImage.Information);
-            //    };
-            //}
+
+            Page++;
+            if ((10 * Page) < RowAll)
+            {
+                Update();
+            }
+            else
+            {
+                Page--;
+                Update();
+                MessageBox.Show("Открыта последняя страница", "Выборка", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
+
         }
 
-        private void Abonents_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //if (Abonents.SelectedItem is abonents abonents)
-            //{
-            //    EditWin editWin = new EditWin(abonents);
-            //    editWin.ShowDialog();
-            //    Update();
+            if (adminList.SelectedItem is Doctors doctors)
+            {
+                EditWin editWin = new EditWin(doctors);
+                Close();
+                editWin.ShowDialog();
+                
 
-            //}
+            }
         }
 
         private void Tarifs_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -140,7 +125,7 @@ namespace WpfApp1.Windows
             //if (TarifRadio.IsChecked == true)
             //{
             //    Page = 0;
-            //    Abonents.Visibility = Visibility.Collapsed;
+            //    Abonents.Visibility = Visibility.Collapsed;  ////Создать метод, в который будет передаваться интовское или булевое значение, которое определит, какой вариант нужно показать
             //    Tarifs.Visibility = Visibility.Visible;
             //    btnDel.Content = "Удалить тариф";
             //    btnAdd.Content = "Добавить тариф";
@@ -243,7 +228,7 @@ namespace WpfApp1.Windows
             if (MessageBox.Show("Вы действительно хотите выйти из учётной записи?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 Close();
-                mainWindow.ShowDialog();
+               mainWindow.ShowDialog();
             }
         }
         private void ResetSearch(object sende, RoutedEventArgs e)

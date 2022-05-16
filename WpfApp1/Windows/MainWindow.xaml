@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="MainWindow" Height="400" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Style="{StaticResource WinStyle}">
     <Grid>
         <Button Style="{StaticResource btnStyle}"
                         x:Name="Close"

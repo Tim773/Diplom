@@ -1,0 +1,148 @@
+﻿<Window x:Class="WpfApp1.Windows.EditWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Windows"
+        mc:Ignorable="d"
+        Title="EditWin"  Height="550" 
+        Width="350" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+   
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <Button Style="{StaticResource btnStyle}"
+                        x:Name="Close"
+                        Content="X"
+                        Width="20"
+                        Height="20"
+                        Margin=" 5"
+                        Click="Close_Click"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                        />
+                <Image Source="\Style/logo_Med.jpg"
+                           Width="80"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="Редактирование существующего пользователя"
+                           FontSize="25"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"
+                           Foreground="Red"/>
+                <GroupBox FontSize="15"
+                    Foreground="red"
+                    Header="Редактирование данных"                          
+                    Margin="15"
+                    BorderBrush="Red">
+
+                    <StackPanel>
+
+                        <TextBlock Text="Имя"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="10 20 10 5"
+                       Foreground="Red"/>
+                        <TextBox Style="{StaticResource tbStyle}"
+                                 x:Name="tbName" 
+                     HorizontalAlignment="Center" 
+                     Height="25" 
+                     Width="200"
+                     HorizontalContentAlignment="Center"
+                     Margin="10"/>
+                        <TextBlock Text="Фамилия"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       Foreground="Red"/>
+                        <TextBox Style="{StaticResource tbStyle}"
+                      x:Name="tbLname" 
+                     HorizontalAlignment="Center" 
+                     Height="25" 
+                     Width="200"
+                     HorizontalContentAlignment="Center"
+                     Margin="10"/>
+                        <TextBlock Text="Отчество"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       Foreground="Red"/>
+                        <TextBox Style="{StaticResource tbStyle}"
+                                 x:Name="tbPatronymic" 
+                     HorizontalAlignment="Center" 
+                     Height="25" 
+                     Width="200"
+                     HorizontalContentAlignment="Center"
+                     Margin="10"/>
+                        <TextBlock Text="Cпециализация"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       Foreground="Red"/>
+                        <ComboBox x:Name="cbSpecialization"                                  
+                                  Height="25"
+                                  Width="200"
+                                  HorizontalAlignment="Center"
+                                  Margin="5"                                  
+                          ItemsSource="{Binding Specialization.Specialization1}"
+                          Loaded="cbSpecial_Loaded"
+                          DisplayMemberPath="Specialization1"
+                          SelectedValuePath="IDSpecialization"
+                                  />
+                        <TextBlock Text="Район"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       Foreground="Red"/>
+                        <ComboBox x:Name="cbSector"                                  
+                                  Height="25"
+                                  Width="200"
+                                  HorizontalAlignment="Center"
+                                  Margin="5"                                  
+                          ItemsSource="{Binding Sector.Sector1}"
+                          Loaded="cbSector_Loaded"
+                          DisplayMemberPath="Sector1"
+                          SelectedValuePath="IDSector"
+                                  />
+                        <TextBlock Text="Отделение"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       Foreground="Red"/>
+                        <ComboBox x:Name="cbSeparation"                                  
+                                  Height="25"
+                                  Width="200"
+                                  HorizontalAlignment="Center"
+                                  Margin="5"                                  
+                          ItemsSource="{Binding Separation.Separation1}"
+                          Loaded="cbSeparation_Loaded"
+                          DisplayMemberPath="Separation1"
+                          SelectedValuePath="IDSeparation"
+                                  />
+
+
+                    </StackPanel>
+                </GroupBox>
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button Style="{StaticResource btnStyle}"
+                        x:Name="editSub"
+                        Content="Подтвердить"
+                        Width="80"
+                        Height="25"
+                        Margin="10"
+                        Click="editSub_Click"/>
+                    <Button Style="{StaticResource btnStyle}"
+                        x:Name="editCan"
+                        Content="Отмена"
+                        Width="80"
+                        Height="25"
+                        Margin="10"
+                        Click="editCan_Click"/>
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

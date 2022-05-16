@@ -45,6 +45,7 @@ namespace WpfApp1
                         tbLogin.Text = string.Empty;
                         pbPassword.Password = string.Empty;
                         Windows.AssisWin assisWin = new Windows.AssisWin();
+                        Close();
                         assisWin.ShowDialog();
                         
                     }
@@ -53,6 +54,7 @@ namespace WpfApp1
                         tbLogin.Text = string.Empty;
                         pbPassword.Password = string.Empty;
                         Windows.AdminWin adminWin = new Windows.AdminWin();
+                        Close();
                         adminWin.ShowDialog();
                         
                        
@@ -62,6 +64,7 @@ namespace WpfApp1
                         tbLogin.Text = string.Empty;
                         pbPassword.Password = string.Empty;
                         Windows.DocWin docWin = new Windows.DocWin();
+                        Close();
                         docWin.ShowDialog();
                         
                     }
