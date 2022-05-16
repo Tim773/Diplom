@@ -10,5 +10,10 @@ namespace WpfApp1
     {
         public static Entities entities = new Entities();
 
+        public static List<Doctors> GetDoctors()
+        {           
+            return entities.Doctors.ToList();
+        }
     }
+
 }

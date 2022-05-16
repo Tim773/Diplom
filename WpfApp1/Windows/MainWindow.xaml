@@ -18,7 +18,7 @@
                         Click="Close_Click"
                         />
         <StackPanel>
-            <Image Source="Style/logo_Med.jpg"
+            <Image Source="\Style/logo_Med.jpg"
                    Width="90"
                    HorizontalAlignment="Center"
                    Margin="5"/>
@@ -65,11 +65,9 @@
                         Content="Регистрация"
                         Width="80"
                         Height="25"
-                        Margin="10"
-                        
+                        Margin="10"                        
                         />
             </WrapPanel>
         </StackPanel>
-
     </Grid>
 </Window>
