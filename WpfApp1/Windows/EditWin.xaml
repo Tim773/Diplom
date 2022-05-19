@@ -10,7 +10,7 @@
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
-   
+
     <Grid>
         <ScrollViewer>
             <StackPanel>
@@ -39,7 +39,7 @@
                     Margin="15"
                     BorderBrush="Red">
 
-                    <StackPanel>
+                    <StackPanel x:Name="stp">
 
                         <TextBlock Text="Имя"
                        FontSize="20"
@@ -122,6 +122,46 @@
                           DisplayMemberPath="Separation1"
                           SelectedValuePath="IDSeparation"
                                   />
+
+                        <TextBlock Text="Кабинет"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="10 20 10 5"
+                       Foreground="Red"/>
+                        <TextBox Style="{StaticResource tbStyle}"
+                                 x:Name="tbCabin" 
+                     HorizontalAlignment="Center" 
+                     Height="25" 
+                     Width="200"
+                     HorizontalContentAlignment="Center"
+                     Margin="10"/>
+                        <StackPanel x:Name="StPAuthData" Visibility="Collapsed">
+                            <TextBlock Text="Логин"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="10 20 10 5"
+                       Foreground="Red"/>
+                            <TextBox Style="{StaticResource tbStyle}"
+                                 x:Name="tbLogin" 
+                     HorizontalAlignment="Center" 
+                     Height="25" 
+                     Width="200"
+                     HorizontalContentAlignment="Center"
+                     Margin="10"/>
+                            <TextBlock Text="Пароль"
+                       FontSize="20"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       Foreground="Red"/>
+                            <PasswordBox Style="{StaticResource pbStyle}"
+                      x:Name="pbReristr" 
+                     HorizontalAlignment="Center" 
+                     Height="25" 
+                     Width="200"
+                     HorizontalContentAlignment="Center"
+                     Margin="10"/>
+
+                        </StackPanel>
 
 
                     </StackPanel>

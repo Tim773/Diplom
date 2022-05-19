@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Windows"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="AdminWin" Height="450" Width="1000" Style="{StaticResource WinStyle}">
     <Grid>
         <Grid.RowDefinitions>
@@ -188,16 +189,16 @@
                 <Button x:Name="btnDel"
                     Style="{StaticResource btnStyle}"
                     Height="25"
-                    Width="120"
+                    Width="80"
                     Margin="20 10" 
-                    Content="Удалить ассистента"
+                    Content="Удалить"
                     Click="btnDel_Click"/>
                 <Button x:Name="btnAdd"
                     Style="{StaticResource btnStyle}"
                     Height="25"
-                    Width="120"
+                    Width="80"
                     Margin="20 10 30 10" 
-                    Content="Добавить ассистента"
+                    Content="Добавить"
                     Click="btnAdd_Click"/>
                 <Button x:Name="Exit"
                     Style="{StaticResource btnStyle}"

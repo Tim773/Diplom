@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище clinicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище clinicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Appointment">
           <Key>
             <PropertyRef Name="IDAppointment" />
@@ -49,8 +49,9 @@
           <Property Name="IDSector" Type="int" Nullable="false" />
           <Property Name="IDSeparation" Type="int" Nullable="false" />
           <Property Name="Cabinet" Type="int" Nullable="false" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="valuable" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Drug">
           <Key>
@@ -511,8 +512,7 @@
             <End Role="SickList" EntitySet="SickList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="clinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -572,13 +572,14 @@
           <Property Name="IDSector" Type="Int32" Nullable="false" />
           <Property Name="IDSeparation" Type="Int32" Nullable="false" />
           <Property Name="Cabinet" Type="Int32" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Doctors" FromRole="Doctors" ToRole="Appointment" />
           <NavigationProperty Name="DocResearch" Relationship="Self.FK_DocResearch_Doctors" FromRole="Doctors" ToRole="DocResearch" />
           <NavigationProperty Name="Sector" Relationship="Self.FK_Doctors_Sector" FromRole="Doctors" ToRole="Sector" />
           <NavigationProperty Name="Separation" Relationship="Self.FK_doctors_separation" FromRole="Doctors" ToRole="Separation" />
           <NavigationProperty Name="Specialization" Relationship="Self.FK_doctors_specialization" FromRole="Doctors" ToRole="Specialization" />
+          <Property Name="valuable" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Drug">
           <Key>
@@ -1018,13 +1019,13 @@
             <End Role="Patients" EntitySet="Patients" />
           </AssociationSet>
           <FunctionImport Name="ClinicProced" ReturnType="Collection(DateTime)">
-            <Parameter Name="Surname" Mode="In" Type="String" />
+          <Parameter Name="Surname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DoctorsProced" ReturnType="Collection(clinicModel.DoctorsProced_Result)">
-            <Parameter Name="Surname" Mode="In" Type="String" />
+          <Parameter Name="Surname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ResearchProced" ReturnType="Collection(String)">
-            <Parameter Name="Research" Mode="In" Type="String" />
+          <Parameter Name="Research" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1118,6 +1119,7 @@
           <EntitySetMapping Name="Doctors">
             <EntityTypeMapping TypeName="clinicModel.Doctors">
               <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="valuable" ColumnName="valuable" />
                 <ScalarProperty Name="IDDoc" ColumnName="IDDoc" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

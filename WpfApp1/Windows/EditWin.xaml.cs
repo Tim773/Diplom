@@ -26,6 +26,8 @@ namespace WpfApp1.Windows
         public EditWin()
         {
             InitializeComponent();
+            StPAuthData.Visibility = Visibility.Visible;
+
         }
         public EditWin(Doctors doctors)
         {
@@ -35,9 +37,9 @@ namespace WpfApp1.Windows
             tbLname.Text = doctors.Surname;
             tbPatronymic.Text = doctors.Patronymic;
             cbSpecialization.SelectedItem = doctors.IDSpecialization;
-            cbSpecialization.SelectedIndex = selectedDoc.IDSpecialization -1;
-            cbSector.SelectedIndex = selectedDoc.IDSector -1;
-            cbSeparation.SelectedIndex = selectedDoc.IDSeparation -1;
+            cbSpecialization.SelectedIndex = selectedDoc.IDSpecialization - 1;
+            cbSector.SelectedIndex = selectedDoc.IDSector - 1;
+            cbSeparation.SelectedIndex = selectedDoc.IDSeparation - 1;
 
         }
         private void editSub_Click(object sender, RoutedEventArgs e)
@@ -45,7 +47,7 @@ namespace WpfApp1.Windows
             if (tbLname.Text == string.Empty ||
                 tbName.Text == string.Empty ||
                 tbPatronymic.Text == string.Empty ||
-               cbSpecialization.SelectedItem == null||
+               cbSpecialization.SelectedItem == null ||
                cbSector.SelectedItem == null ||
                cbSeparation.SelectedItem == null)
             {
@@ -54,43 +56,94 @@ namespace WpfApp1.Windows
             else if (ValidateFIO(tbName.Text, tbLname.Text) == false)
             {
                 MessageBox.Show("Имя или фамилия содержат недопустимые символы (В этих полях может присутсвовать только кирилица)", "Регистрация абоента", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }           
-            else if (selectedDoc.Name == tbName.Text &&
+            }
+            else if (selectedDoc != null &&
+                        selectedDoc.Name == tbName.Text &&
                         selectedDoc.Surname == tbLname.Text &&
                         selectedDoc.Patronymic == tbPatronymic.Text &&
-                        selectedDoc.IDSpecialization == cbSpecialization.SelectedIndex +1 &&
-                        selectedDoc.IDSector == cbSector.SelectedIndex +1 &&
-                        selectedDoc.IDSeparation == cbSeparation.SelectedIndex +1)
+                        selectedDoc.IDSpecialization == cbSpecialization.SelectedIndex + 1 &&
+                        selectedDoc.IDSector == cbSector.SelectedIndex + 1 &&
+                        selectedDoc.IDSeparation == cbSeparation.SelectedIndex + 1)
             {
                 MessageBox.Show("Изменения не были внесены", "Редактирование абоента", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
-                try
+                if (selectedDoc != null && ValidateNumber(tbCabin.Text) == true)
                 {
-                    selectedDoc.Name = tbName.Text;
-                    selectedDoc.Surname = tbLname.Text;
-                    selectedDoc.Patronymic = tbPatronymic.Text;
-                    selectedDoc.IDSpecialization = cbSpecialization.SelectedIndex +1;
-                    selectedDoc.IDSector = cbSector.SelectedIndex +1;
-                    selectedDoc.IDSeparation = cbSeparation.SelectedIndex +1;
+                    try
+                    {
+                        selectedDoc.Name = tbName.Text;
+                        selectedDoc.Surname = tbLname.Text;
+                        selectedDoc.Patronymic = tbPatronymic.Text;
+                        selectedDoc.IDSpecialization = cbSpecialization.SelectedIndex + 1;
+                        selectedDoc.IDSector = cbSector.SelectedIndex + 1;
+                        selectedDoc.IDSeparation = cbSeparation.SelectedIndex + 1;
+                        selectedDoc.Cabinet = Convert.ToInt32(tbCabin.Text);
+
+                        entities.SaveChanges();
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message);
+                    }
+                    tbLname.Text = string.Empty;
+                    tbName.Text = string.Empty;
+                    tbPatronymic.Text = string.Empty;
+                    cbSpecialization.SelectedIndex = -1;
+                    cbSector.SelectedIndex = -1;
+                    cbSeparation.SelectedIndex = -1;
+                    tbCabin.Text = string.Empty;
+                    
+                    MessageBox.Show("Обновление данных прошло успешно", "Редактирование", MessageBoxButton.OK);
+                    AdminWin adminWin = new AdminWin();
+                    Close();
+                    adminWin.ShowDialog();
                 }
-                catch (Exception err)
+                else
                 {
-                    MessageBox.Show(err.Message);
+                    try
+                    {
+                        entities.Doctors.Add(new Doctors
+                        {
+
+                            Name = tbName.Text,
+                            Surname = tbLname.Text,
+                            Patronymic = tbPatronymic.Text,
+                            IDSpecialization = cbSpecialization.SelectedIndex + 1,
+                            IDSector = cbSector.SelectedIndex + 1,
+                            IDSeparation = cbSeparation.SelectedIndex + 1,
+                            Cabinet = Convert.ToInt32(tbCabin.Text),
+                            Login = tbLogin.Text,
+                            Password = pbReristr.Password,
+                            valuable = 1
+                        });
+                        entities.SaveChanges();
+                        tbLname.Text = string.Empty;
+                        tbName.Text = string.Empty;
+                        tbPatronymic.Text = string.Empty;
+                        cbSpecialization.SelectedIndex = -1;
+                        cbSector.SelectedIndex = -1;
+                        cbSeparation.SelectedIndex = -1;
+                        tbCabin.Text = string.Empty;
+                        tbLogin.Text = string.Empty;
+                        pbReristr.Password = string.Empty;
+                        MessageBox.Show("Добавление прошло успешно", "Добавление", MessageBoxButton.OK);
+                        AdminWin adminWin = new AdminWin();
+                        Close();
+                        adminWin.ShowDialog();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(@ex.Message);
+                        throw;
+                    }
+
+
                 }
-                tbLname.Text = string.Empty;
-                tbName.Text = string.Empty;
-                tbPatronymic.Text = string.Empty;
-                cbSpecialization.SelectedIndex = -1;
-                cbSector.SelectedIndex = -1;
-                cbSeparation.SelectedIndex = -1;
-                entities.SaveChanges();
-                MessageBox.Show("Обновление данных абонента прошло успешно", "Редактирование абоента", MessageBoxButton.OK);
-                AdminWin adminWin = new AdminWin();
-                Close();
-                adminWin.ShowDialog();
+
             }
+
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {

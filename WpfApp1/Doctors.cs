@@ -31,6 +31,7 @@ namespace WpfApp1
         public int Cabinet { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        public int valuable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointment { get; set; }

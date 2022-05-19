@@ -28,14 +28,13 @@ namespace WpfApp1.Windows
         }
         public int Page { get; set; } = 0;
         public int RowAll { get; set; } = 0;
-        public int RowAllTarif { get; set; } = 0;
+        
 
         public void Update()
         {
 
-            var datasourse = entities.Doctors.ToList();
-
-            RowAllTarif = datasourse.Count();
+            var datasourse = entities.Doctors.Where(i => i.valuable ==1).ToList();
+            
             RowAll = datasourse.Count();
             datasourse = datasourse.Skip(Page * 10).Take(10).ToList();
             var doctors = GetDoctors();
@@ -78,7 +77,7 @@ namespace WpfApp1.Windows
                 EditWin editWin = new EditWin(doctors);
                 Close();
                 editWin.ShowDialog();
-                
+
 
             }
         }
@@ -155,70 +154,41 @@ namespace WpfApp1.Windows
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    if (AbonentsRadio.IsChecked == true)
-            //    {
-            //        var itm = Abonents.SelectedItem;
-            //        if (itm == null)
-            //        {
-            //            MessageBox.Show("Выберите запись из таблицы", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information); ;
-            //        }
-            //        else if (MessageBox.Show("Строка абонента будет удалена из таблицы. Желаете продолжить?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            //        {
-            //            int del = (Abonents.SelectedItem as abonents).id;
-
-            //            abonents abonents = entities.abonents.Where(i => i.id == del).FirstOrDefault();
-            //            abonents.avaluable = "0";
-            //            entities.SaveChanges();
-            //            Update();
-            //        }
-            //        else return;
-
-            //    }
-            //    else if (TarifRadio.IsChecked == true)
-            //    {
-            //        var itm = Tarifs.SelectedItem;
-            //        if (itm == null)
-            //        {
-            //            MessageBox.Show("Выберите запись из таблицы", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information);
-            //        }
-            //        else if (MessageBox.Show("Строка тарифа будет удалена из таблицы. Желаете продолжить?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            //        {
-            //            int del = (Tarifs.SelectedItem as tarifs).idTarif;
-
-            //            tarifs tarifs = entities.tarifs.Where(i => i.idTarif == del).FirstOrDefault();
-            //            tarifs.avaluable = "0";
-            //            entities.SaveChanges();
-            //            Update();
+            try
+            {
 
 
-            //        }
-            //        else return;
-            //    }
-            //    Update();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Что-то пошло не так!");
-            //}
+                var itm = adminList.SelectedItem;
+                if (itm == null)
+                {
+                    MessageBox.Show("Выберите запись из таблицы", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information); ;
+                }
+                else if (MessageBox.Show("Строка абонента будет удалена из таблицы. Желаете продолжить?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    int del = (adminList.SelectedItem as Doctors).IDDoc;
+
+                    Doctors doctors = entities.Doctors.Where(i => i.IDDoc == del).FirstOrDefault();
+                    
+                    doctors.valuable = 0;
+                    entities.SaveChanges();
+                    Update();
+                }
+                    else return;
+
+                Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Что-то пошло не так!");
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //if (AbonentsRadio.IsChecked == true)
-            //{
-            //    registrationWin registrationWin = new registrationWin();
-            //    registrationWin.AdminUpdate();
-            //    Close();
-            //    registrationWin.ShowDialog();
-            //}
-            //else if (TarifRadio.IsChecked == true)
-            //{
-            //    addTarifWin addTarifWin = new addTarifWin();
-            //    Close();
-            //    addTarifWin.ShowDialog();
-            //}
+
+            EditWin editWin = new EditWin();
+            Close();
+            editWin.ShowDialog();
 
         }
 
@@ -228,7 +198,7 @@ namespace WpfApp1.Windows
             if (MessageBox.Show("Вы действительно хотите выйти из учётной записи?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 Close();
-               mainWindow.ShowDialog();
+                mainWindow.ShowDialog();
             }
         }
         private void ResetSearch(object sende, RoutedEventArgs e)
