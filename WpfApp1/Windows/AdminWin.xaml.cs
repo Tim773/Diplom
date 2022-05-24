@@ -28,17 +28,25 @@ namespace WpfApp1.Windows
         }
         public int Page { get; set; } = 0;
         public int RowAll { get; set; } = 0;
-        
+
 
         public void Update()
         {
-
-            var datasourse = entities.Doctors.Where(i => i.valuable ==1).ToList();
-            
+            var datasourse = entities.Doctors.Where(i => i.valuable == 1).ToList();
             RowAll = datasourse.Count();
             datasourse = datasourse.Skip(Page * 10).Take(10).ToList();
             var doctors = GetDoctors();
             adminList.ItemsSource = datasourse;
+            var dataRegList = entities.Sector.ToList();
+            listReg.ItemsSource = dataRegList;
+            var dataSepList = entities.Separation.ToList();
+            listSeparation.ItemsSource = dataSepList;
+            var dataDrugList = entities.Drug.ToList();
+            listDrug.ItemsSource = dataDrugList;
+            var dataSpecList = entities.Specialization.ToList();
+            listSpec.ItemsSource = dataSpecList;
+            var dataResList = entities.Research.ToList();
+            listResearch.ItemsSource= dataResList;
         }
         private void BackList_Click(object sender, RoutedEventArgs e)
         {
@@ -92,57 +100,44 @@ namespace WpfApp1.Windows
             //}
         }
 
-        private void ClientsRadio_Click(object sender, RoutedEventArgs e)
+        private void WorkersRadio_Click(object sender, RoutedEventArgs e)
         {
-            //if (AbonentsRadio.IsChecked == true)
-            //{
-            //    Page = 0;
-            //    Abonents.Visibility = Visibility.Visible;
-            //    Tarifs.Visibility = Visibility.Collapsed;
-            //    btnDel.Content = "Удалить абонента";
-            //    btnAdd.Content = "Добавить абонента";
-            //    FamSearch.Visibility = Visibility.Visible;
-            //    PatrSearch.Visibility = Visibility.Visible;
-            //    Update();
-            //}
-            //else if (AbonentsRadio.IsChecked == false)
-            //{
-            //    Page = 0;
-            //    Abonents.Visibility = Visibility.Visible;
-            //    Tarifs.Visibility = Visibility.Collapsed;
-            //    btnDel.Content = "Удалить абонента";
-            //    btnAdd.Content = "Добавить абонента";
-            //    FamSearch.Visibility = Visibility.Visible;
-            //    PatrSearch.Visibility = Visibility.Visible;
-            //    Update();
+            {
 
-            //}
+                Page = 0;
+                adminList.Visibility = Visibility.Visible;
+                listReg.Visibility = Visibility.Collapsed;
+                FamSearch.Visibility = Visibility.Visible;
+                PatrSearch.Visibility = Visibility.Visible;
+                listSeparation.Visibility = Visibility.Collapsed;
+                listDrug.Visibility = Visibility.Collapsed;
+                listResearch.Visibility = Visibility.Collapsed;
+                listSpec.Visibility = Visibility.Collapsed;
+                nextList.Visibility = Visibility.Visible;
+                backList.Visibility = Visibility.Visible;
+                name.Content = "Имя";
+                Update();
+
+            }
         }
 
-        private void TarifRadio_Click(object sender, RoutedEventArgs e)
+        private void RegRadio_Click(object sender, RoutedEventArgs e)
         {
-            //if (TarifRadio.IsChecked == true)
-            //{
-            //    Page = 0;
-            //    Abonents.Visibility = Visibility.Collapsed;  ////Создать метод, в который будет передаваться интовское или булевое значение, которое определит, какой вариант нужно показать
-            //    Tarifs.Visibility = Visibility.Visible;
-            //    btnDel.Content = "Удалить тариф";
-            //    btnAdd.Content = "Добавить тариф";
-            //    FamSearch.Visibility = Visibility.Collapsed;
-            //    PatrSearch.Visibility = Visibility.Collapsed;
-            //    Update();
-            //}
-            //else if (TarifRadio.IsChecked == false)
-            //{
-            //    Page = 0;
-            //    Abonents.Visibility = Visibility.Collapsed;
-            //    Tarifs.Visibility = Visibility.Visible;
-            //    btnDel.Content = "Удалить тариф";
-            //    btnAdd.Content = "Добавить тариф";
-            //    FamSearch.Visibility = Visibility.Collapsed;
-            //    PatrSearch.Visibility = Visibility.Collapsed;
-            //    Update();
-            //}
+
+            Page = 0;
+            adminList.Visibility = Visibility.Collapsed;
+            listSeparation.Visibility = Visibility.Collapsed;
+            listReg.Visibility = Visibility.Visible;
+            listDrug.Visibility = Visibility.Collapsed;
+            listResearch.Visibility = Visibility.Collapsed;
+            listSpec.Visibility = Visibility.Collapsed;
+            FamSearch.Visibility = Visibility.Collapsed;
+            PatrSearch.Visibility = Visibility.Collapsed;
+            nextList.Visibility= Visibility.Hidden;
+            backList.Visibility= Visibility.Hidden;
+            name.Content = "Район";
+            Update();
+
         }
         private void Close_Click(object sender, EventArgs e)
         {
@@ -168,12 +163,12 @@ namespace WpfApp1.Windows
                     int del = (adminList.SelectedItem as Doctors).IDDoc;
 
                     Doctors doctors = entities.Doctors.Where(i => i.IDDoc == del).FirstOrDefault();
-                    
+
                     doctors.valuable = 0;
                     entities.SaveChanges();
                     Update();
                 }
-                    else return;
+                else return;
 
                 Update();
             }
@@ -210,55 +205,54 @@ namespace WpfApp1.Windows
         }
         private void Search(object sender, RoutedEventArgs e)
         {
-            //if (AbonentsRadio.IsChecked == true)
-            //{
-            //    var tabb = entities.abonents.ToList().Where(i => i.avaluable == "1");
-            //    if (FamSearch1.Text.Length == 0 && ImySearch1.Text.Length == 0)
-            //    {
-            //        Abonents.ItemsSource = tabb.ToList();
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        var res = tabb.Where(i => i.lName.Contains(FamSearch1.Text) &&
-            //                             i.name.Contains(ImySearch1.Text) &&
-            //                             i.number.Contains(PatrSearch1.Text)
-            //                             ).ToList();
-            //        if (res.Count() != 0)
-            //        {
-            //            Abonents.ItemsSource = res;
-            //        }
-            //        else
-            //            MessageBox.Show("Внимание!", " Не найдено!",
-            //                MessageBoxButton.OK, MessageBoxImage.Warning);
+            if (WorkerRadio.IsChecked == true)
+            {
+                var tabb = entities.Doctors.ToList().Where(i => i.valuable == 1);
+                if (FamSearch1.Text.Length == 0 && ImySearch1.Text.Length == 0)
+                {
+                    adminList.ItemsSource = tabb.ToList();
+                    return;
+                }
+                else
+                {
+                    var res = tabb.Where(i => i.Surname.Contains(FamSearch1.Text) &&
+                                         i.Name.Contains(ImySearch1.Text)
+                                         ).ToList();
+                    if (res.Count() != 0)
+                    {
+                        adminList.ItemsSource = res;
+                    }
+                    else
+                        MessageBox.Show("Внимание!", " Не найдено!",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
 
 
-            //    }
+                }
 
-            //}
-            //else if (TarifRadio.IsChecked == true)
-            //{
-            //    var tabb = entities.tarifs.ToList().Where(i => i.avaluable == "1");
-            //    if (ImySearch1.Text.Length == 0)
-            //    {
-            //        Tarifs.ItemsSource = tabb.ToList();
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        var res = tabb.Where(i => i.nameTarif.Contains(ImySearch1.Text)
-            //                             ).ToList();
-            //        if (res.Count() != 0)
-            //        {
+            }
+            else if (RegRadio.IsChecked == true)
+            {
+                var tabb = entities.Sector.ToList();
+                if (ImySearch1.Text.Length == 0)
+                {
+                    listReg.ItemsSource = tabb.ToList();
+                    return;
+                }
+                else
+                {
+                    var res = tabb.Where(i => i.Sector1.Contains(ImySearch1.Text)
+                                         ).ToList();
+                    if (res.Count() != 0)
+                    {
 
-            //            Tarifs.ItemsSource = res;
-            //        }
-            //        else
-            //            MessageBox.Show("Внимание!", " Не найдено!",
-            //                MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    }
+                        listReg.ItemsSource = res;
+                    }
+                    else
+                        MessageBox.Show("Внимание!", " Не найдено!",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
 
-            //}
+            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -269,9 +263,77 @@ namespace WpfApp1.Windows
             }
         }
 
-        private void off_Click(object sender, RoutedEventArgs e)
+        private void adminList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void DepRadio_Click(object sender, RoutedEventArgs e)
+        {
+            Page = 0;
+            adminList.Visibility = Visibility.Collapsed;
+            listReg.Visibility = Visibility.Collapsed;
+            listSeparation.Visibility = Visibility.Visible;
+            FamSearch.Visibility = Visibility.Collapsed;
+            PatrSearch.Visibility = Visibility.Collapsed;
+            listDrug.Visibility = Visibility.Collapsed;
+            listResearch.Visibility = Visibility.Collapsed;
+            listSpec.Visibility = Visibility.Collapsed;
+            name.Content = "Отделение";
+            nextList.Visibility = Visibility.Hidden;
+            backList.Visibility = Visibility.Hidden;
+            Update();
+        }
+
+        private void PrepRadio_Click(object sender, RoutedEventArgs e)
+        {
+            Page = 0;
+            adminList.Visibility = Visibility.Collapsed;
+            listSeparation.Visibility = Visibility.Collapsed;
+            listReg.Visibility = Visibility.Collapsed;
+            listDrug.Visibility = Visibility.Visible;
+            listResearch.Visibility = Visibility.Collapsed;
+            listSpec.Visibility = Visibility.Collapsed;
+            FamSearch.Visibility = Visibility.Collapsed;
+            PatrSearch.Visibility = Visibility.Collapsed;
+            nextList.Visibility = Visibility.Hidden;
+            backList.Visibility = Visibility.Hidden;
+            name.Content = "Препарат";
+            Update();
+        }
+
+        private void SpecRadio_Click(object sender, RoutedEventArgs e)
+        {
+            Page = 0;
+            adminList.Visibility = Visibility.Collapsed;
+            listSeparation.Visibility = Visibility.Collapsed;
+            listReg.Visibility = Visibility.Collapsed;
+            listDrug.Visibility = Visibility.Collapsed;
+            listResearch.Visibility = Visibility.Collapsed;
+            listSpec.Visibility = Visibility.Visible;
+            FamSearch.Visibility = Visibility.Collapsed;
+            PatrSearch.Visibility = Visibility.Collapsed;
+            nextList.Visibility = Visibility.Hidden;
+            backList.Visibility = Visibility.Hidden;
+            name.Content = "Специальность";
+            Update();
+        }
+
+        private void SerRadio_Click(object sender, RoutedEventArgs e)
+        {
+            Page = 0;
+            adminList.Visibility = Visibility.Collapsed;
+            listSeparation.Visibility = Visibility.Collapsed;
+            listReg.Visibility = Visibility.Collapsed;
+            listDrug.Visibility = Visibility.Collapsed;
+            listResearch.Visibility = Visibility.Visible;
+            listSpec.Visibility = Visibility.Collapsed;
+            FamSearch.Visibility = Visibility.Collapsed;
+            PatrSearch.Visibility = Visibility.Collapsed;
+            nextList.Visibility = Visibility.Hidden;
+            backList.Visibility = Visibility.Hidden;
+            name.Content = "Услуга";
+            Update();
         }
     }
 }
