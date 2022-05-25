@@ -5,8 +5,134 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Windows"
         mc:Ignorable="d"
-        Title="AssisWin" Height="450" Width="800">
+        Title="AssisWin" Height="450" Width="1000" Style="{StaticResource WinStyle}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel HorizontalAlignment="Center" Grid.Row ="0" Width="1000" Margin="0,1,0,1">
+            <Image Source="\Style/logo_Med.jpg" 
+                   Margin="150 2 2 2"/>
+            <TextBlock 
+                       FontSize="50"
+                       Foreground="Red"
+                       HorizontalAlignment="Center" Width="auto"
+                       Text="Окно ассистента"/>
+            <Button Style="{StaticResource btnStyle}"
+                        x:Name="Close"
+                        Content="X"
+                        Width="20"
+                        Height="20"
+                        Margin="470 5 2 0"
+                        Click="Close_Click"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                        />
+
+        </WrapPanel>
+        <StackPanel Grid.Row ="1"
+                   Margin="10,10,10,10">
+            <WrapPanel>
+                <ListView x:Name="patientList"
+                      Visibility="Visible"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Height="240"
+                      Width="980"
+                      MouseDoubleClick="patientList_MouseDoubleClick"
+                      >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="100" Header="Имя"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Surname}" Width="100" Header="Фамилия"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Patronymic}" Width="100" Header="Отчество"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Birthday}" Width="160" Header="Дата рож."/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Gender.Gender1}" Width="80" Header="Пол"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Polis}" Width="110" Header="Полис"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Phone}" Width="125" Header="Номер тел."/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Sector.Sector1}" Width="150" Header="Участок"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </WrapPanel>
+            <WrapPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+
+                <Button x:Name="btnAdd"
+                    Style="{StaticResource btnStyle}"
+                    Height="25"
+                    Width="80"
+                    Margin="20 10 30 10" 
+                    Content="Добавить"
+                    Click="btnAdd_Click"/>
+                
+                <Button x:Name="Exit"
+                    Style="{StaticResource btnStyle}"
+                    Height="25"
+                    Width="120"
+                    Margin="40 10" 
+                    Content="Выход из уч. записи"
+                    Click="Exit_Click"/>
+                <WrapPanel HorizontalAlignment="Center" Width="420">
+
+                    <GroupBox x:Name="GR_BOX"
+                              Margin="25,5,25,5"
+                              Height="auto"
+                              Foreground="red"
+                              BorderBrush="Red"
+                              >
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Поиск" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <StackPanel Orientation="Vertical">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel x:Name="FamSearch" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Label Content="Фамилия" Foreground="red" />
+                                        <TextBox x:Name="FamSearch1" Style="{StaticResource tbStyle}" Width="160" Margin="0 0 0 10" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="ImySearch" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Label x:Name="name" Content="Имя" Foreground="red"/>
+                                        <TextBox x:Name="ImySearch1" Margin="0 0 0 10" Style="{StaticResource tbStyle}" Width="160"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                    <StackPanel 
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Height="auto" Width="auto"
+                                Margin="25 0 25 0">
+                        <Button Content="Поиск"
+                                Style="{StaticResource btnStyle}"
+                                Width="60"
+                                Margin="5 "
+                                Click="Button_Click"
+                                HorizontalAlignment="Center"/>
+                        <Button Content="Сброс" 
+                                Style="{StaticResource btnStyle}"
+                                Width="60"
+                                Margin="5"
+                                Click="Button_Click_1"
+                                HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </WrapPanel>
+            </WrapPanel>
+        </StackPanel>
     </Grid>
 </Window>
