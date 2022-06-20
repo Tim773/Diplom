@@ -20,5 +20,6 @@ namespace WpfApp1
         public Nullable<System.DateTime> SlClose { get; set; }
     
         public virtual Disease Disease { get; set; }
+        public virtual Disease Disease1 { get; set; }
     }
 }

@@ -189,9 +189,10 @@ namespace WpfApp1.Windows
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+           
             if (MessageBox.Show("Вы действительно хотите выйти из учётной записи?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
+                MainWindow mainWindow = new MainWindow();
                 Close();
                 mainWindow.ShowDialog();
             }
@@ -207,7 +208,7 @@ namespace WpfApp1.Windows
         {
             if (WorkerRadio.IsChecked == true)
             {
-                var tabb = entities.Doctors.ToList().Where(i => i.valuable == 1);
+                var tabb = entities.Doctors.Where(i => i.valuable == 1).ToList();
                 if (FamSearch1.Text.Length == 0 && ImySearch1.Text.Length == 0)
                 {
                     adminList.ItemsSource = tabb.ToList();
@@ -223,7 +224,7 @@ namespace WpfApp1.Windows
                         adminList.ItemsSource = res;
                     }
                     else
-                        MessageBox.Show("Внимание!", " Не найдено!",
+                        MessageBox.Show(" Не найдено!", "Внимание!",
                             MessageBoxButton.OK, MessageBoxImage.Warning);
 
 

@@ -4,31 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="87c85555611043f685a268fc7a2fcdf9" Name="Diagram1" ZoomLevel="90">
+      <Diagram DiagramId="8b4833cfd0414423bbe03e71b17d62f3" Name="Diagram1">
         <EntityTypeShape EntityType="clinicModel.Appointment" Width="1.5" PointX="11.25" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Diagnosis" Width="1.5" PointX="11.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Diagnosis" Width="1.5" PointX="11.25" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="clinicModel.Disease" Width="1.5" PointX="13.5" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.DocResearch" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Doctors" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Drug" Width="1.5" PointX="13.5" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.DrugRecipe" Width="1.5" PointX="15.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Gender" Width="1.5" PointX="3.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.History" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Patients" Width="1.5" PointX="6" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Recipe" Width="1.5" PointX="13.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Research" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.ResearchAppointment" Width="1.5" PointX="13.5" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Sector" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.DocResearch" Width="1.5" PointX="8.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Doctors" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Drug" Width="1.5" PointX="13.5" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.DrugRecipe" Width="1.5" PointX="15.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Gender" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.History" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Patients" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Recipe" Width="1.5" PointX="13.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Research" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.ResearchAppointment" Width="1.5" PointX="13.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Sector" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="clinicModel.Separation" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.SickList" Width="1.5" PointX="15.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="clinicModel.Specialization" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.Specialization" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="clinicModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="clinicModel.SickList" Width="1.5" PointX="15.75" PointY="8.375" IsExpanded="true" />
         <AssociationConnector Association="clinicModel.FK_Appointment_Doctors" ManuallyRouted="false" />
+        <AssociationConnector Association="clinicModel.FK_Appointment_Doctors1" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_appointment_patients" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_disease_appointment" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_Recipe_Appointment1" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_research_appointment_appointment" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_disease_diagnosis" ManuallyRouted="false" />
+        <AssociationConnector Association="clinicModel.FK_sick_list_disease" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_SickList_Disease" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_doc_research_research" ManuallyRouted="false" />
         <AssociationConnector Association="clinicModel.FK_DocResearch_Doctors" ManuallyRouted="false" />

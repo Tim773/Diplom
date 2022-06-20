@@ -28,6 +28,7 @@ namespace WpfApp1
         public System.DateTime DateTime { get; set; }
     
         public virtual Doctors Doctors { get; set; }
+        public virtual Doctors Doctors1 { get; set; }
         public virtual Patients Patients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Disease> Disease { get; set; }

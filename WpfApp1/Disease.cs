@@ -18,6 +18,7 @@ namespace WpfApp1
         public Disease()
         {
             this.SickList = new HashSet<SickList>();
+            this.SickList1 = new HashSet<SickList>();
         }
     
         public int IDDisease { get; set; }
@@ -28,5 +29,7 @@ namespace WpfApp1
         public virtual Diagnosis Diagnosis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SickList> SickList { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SickList> SickList1 { get; set; }
     }
 }

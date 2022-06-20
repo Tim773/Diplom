@@ -15,10 +15,10 @@ namespace WpfApp1
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Entities : DbContext
+    public partial class clinicEntities1 : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public clinicEntities1()
+            : base("name=clinicEntities1")
         {
         }
     
@@ -42,9 +42,9 @@ namespace WpfApp1
         public virtual DbSet<ResearchAppointment> ResearchAppointment { get; set; }
         public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<Separation> Separation { get; set; }
-        public virtual DbSet<SickList> SickList { get; set; }
         public virtual DbSet<Specialization> Specialization { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<SickList> SickList { get; set; }
     
         public virtual ObjectResult<Nullable<System.DateTime>> ClinicProced(string surname)
         {

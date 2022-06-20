@@ -60,6 +60,14 @@ namespace WpfApp1.Windows
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            entities.Appointment.Add(new Appointment
+            {
+                IDDoc = cbDoctors.SelectedIndex,
+                IDPatient = selectedPatient.IDPatient,
+                DateTime = DateTime.Now
+            });
+            MessageBox.Show("Запись прошла успешно", "Добавление", MessageBoxButton.OK);
+            Close();
             
         }
     }

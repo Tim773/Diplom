@@ -18,6 +18,7 @@ namespace WpfApp1
         public Doctors()
         {
             this.Appointment = new HashSet<Appointment>();
+            this.Appointment1 = new HashSet<Appointment>();
             this.DocResearch = new HashSet<DocResearch>();
         }
     
@@ -31,10 +32,12 @@ namespace WpfApp1
         public int Cabinet { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public int valuable { get; set; }
+        public Nullable<int> valuable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointment1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocResearch> DocResearch { get; set; }
         public virtual Sector Sector { get; set; }

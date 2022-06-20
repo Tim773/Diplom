@@ -25,7 +25,7 @@
                         Content="X"
                         Width="20"
                         Height="20"
-                        Margin="470 5 2 0"
+                        Margin="350 5 2 0"
                         Click="Close_Click"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
@@ -48,7 +48,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="100" Header="Имя"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Surname}" Width="100" Header="Фамилия"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Patronymic}" Width="100" Header="Отчество"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Birthday}" Width="160" Header="Дата рож."/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Birthday, StringFormat={}dd.MM.yyyy}" Width="160" Header="Дата рож."/>
                             <GridViewColumn DisplayMemberBinding="{Binding Gender.Gender1}" Width="80" Header="Пол"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Polis}" Width="110" Header="Полис"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Phone}" Width="125" Header="Номер тел."/>
@@ -66,6 +66,13 @@
                     Margin="20 10 30 10" 
                     Content="Добавить"
                     Click="btnAdd_Click"/>
+                <Button x:Name="btnRed"
+                    Style="{StaticResource btnStyle}"
+                    Height="25"
+                    Width="100"
+                    Margin="20 10 30 10" 
+                    Content="Редактировать"
+                    Click="btnRed_Click"/>
                 
                 <Button x:Name="Exit"
                     Style="{StaticResource btnStyle}"

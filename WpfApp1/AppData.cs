@@ -8,7 +8,7 @@ namespace WpfApp1
 {
     public class AppData
     {
-        public static Entities entities = new Entities();
+        public static clinicEntities1 entities = new clinicEntities1();
 
         public static List<Doctors> GetDoctors()
         {           

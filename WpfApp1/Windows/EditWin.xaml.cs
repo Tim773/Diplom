@@ -33,10 +33,10 @@ namespace WpfApp1.Windows
         {
             InitializeComponent();
             selectedDoc = doctors;
-            tbName.Text = doctors.Name;
-            tbLname.Text = doctors.Surname;
-            tbPatronymic.Text = doctors.Patronymic;
-            cbSpecialization.SelectedItem = doctors.IDSpecialization;
+            tbName.Text = selectedDoc.Name;
+            tbLname.Text = selectedDoc.Surname;
+            tbPatronymic.Text = selectedDoc.Patronymic;
+            cbSpecialization.SelectedItem = selectedDoc.IDSpecialization;
             cbSpecialization.SelectedIndex = selectedDoc.IDSpecialization - 1;
             cbSector.SelectedIndex = selectedDoc.IDSector - 1;
             cbSeparation.SelectedIndex = selectedDoc.IDSeparation - 1;
@@ -51,11 +51,11 @@ namespace WpfApp1.Windows
                cbSector.SelectedItem == null ||
                cbSeparation.SelectedItem == null)
             {
-                MessageBox.Show("Вы указали не все данные", "Регистрация абоента", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Вы указали не все данные", "Добавление", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else if (ValidateFIO(tbName.Text, tbLname.Text) == false)
             {
-                MessageBox.Show("Имя или фамилия содержат недопустимые символы (В этих полях может присутсвовать только кирилица)", "Регистрация абоента", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Имя или фамилия содержат недопустимые символы (В этих полях может присутсвовать только кирилица)", "Добавление", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else if (selectedDoc != null &&
                         selectedDoc.Name == tbName.Text &&
@@ -65,7 +65,7 @@ namespace WpfApp1.Windows
                         selectedDoc.IDSector == cbSector.SelectedIndex + 1 &&
                         selectedDoc.IDSeparation == cbSeparation.SelectedIndex + 1)
             {
-                MessageBox.Show("Изменения не были внесены", "Редактирование абоента", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Изменения не были внесены", "Редактирование", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {

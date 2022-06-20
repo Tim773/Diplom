@@ -58,17 +58,7 @@ namespace WpfApp1
                         adminWin.ShowDialog();
                         
                        
-                    }
-                    else if (user != null && user.IDSpecialization > 1 && user.IDSpecialization < 15)
-                    {
-                        var authDoc = user;
-                        tbLogin.Text = string.Empty;
-                        pbPassword.Password = string.Empty;
-                        Windows.DocWin docWin = new Windows.DocWin(authDoc);
-                        Close();
-                        docWin.ShowDialog();
-                        
-                    }
+                    }                    
                     else
                     {
                         MessageBox.Show("Пользователь не найден! Проверьте правильность введённых данных.", "Авторизация пользователя", MessageBoxButton.OK, MessageBoxImage.Warning);

@@ -49,9 +49,9 @@
           <Property Name="IDSector" Type="int" Nullable="false" />
           <Property Name="IDSeparation" Type="int" Nullable="false" />
           <Property Name="Cabinet" Type="int" Nullable="false" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="valuable" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="valuable" Type="int" />
         </EntityType>
         <EntityType Name="Drug">
           <Key>
@@ -138,9 +138,12 @@
           <Property Name="IDSeparation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Separation" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "clinic.dbo.SickList" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="SickList">
           <Key>
             <PropertyRef Name="IDSickList" />
+            <PropertyRef Name="IDDisease" />
           </Key>
           <Property Name="IDSickList" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDDisease" Type="int" Nullable="false" />
@@ -165,6 +168,18 @@
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_Appointment_Doctors">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="IDDoc" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="IDDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Doctors1">
           <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -368,6 +383,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_sick_list_disease">
+          <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
+          <End Role="SickList" Type="Self.SickList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="IDDisease" />
+            </Principal>
+            <Dependent Role="SickList">
+              <PropertyRef Name="IDDisease" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SickList_Disease">
           <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
           <End Role="SickList" Type="Self.SickList" Multiplicity="*" />
@@ -436,10 +463,21 @@
           <EntitySet Name="ResearchAppointment" EntityType="Self.ResearchAppointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Separation" EntityType="Self.Separation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SickList" EntityType="Self.SickList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SickList" EntityType="Self.SickList" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SickList].[IDSickList] AS [IDSickList], 
+    [SickList].[IDDisease] AS [IDDisease], 
+    [SickList].[SlOpen] AS [SlOpen], 
+    [SickList].[SlClose] AS [SlClose]
+    FROM [dbo].[SickList] AS [SickList]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Appointment_Doctors" Association="Self.FK_Appointment_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Doctors1" Association="Self.FK_Appointment_Doctors1">
             <End Role="Doctors" EntitySet="Doctors" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
@@ -507,6 +545,10 @@
             <End Role="DocResearch" EntitySet="DocResearch" />
             <End Role="ResearchAppointment" EntitySet="ResearchAppointment" />
           </AssociationSet>
+          <AssociationSet Name="FK_sick_list_disease" Association="Self.FK_sick_list_disease">
+            <End Role="Disease" EntitySet="Disease" />
+            <End Role="SickList" EntitySet="SickList" />
+          </AssociationSet>
           <AssociationSet Name="FK_SickList_Disease" Association="Self.FK_SickList_Disease">
             <End Role="Disease" EntitySet="Disease" />
             <End Role="SickList" EntitySet="SickList" />
@@ -525,6 +567,7 @@
           <Property Name="IDPatient" Type="Int32" Nullable="false" />
           <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Doctors" Relationship="Self.FK_Appointment_Doctors" FromRole="Appointment" ToRole="Doctors" />
+          <NavigationProperty Name="Doctors1" Relationship="Self.FK_Appointment_Doctors1" FromRole="Appointment" ToRole="Doctors" />
           <NavigationProperty Name="Patients" Relationship="Self.FK_appointment_patients" FromRole="Appointment" ToRole="Patients" />
           <NavigationProperty Name="Disease" Relationship="Self.FK_disease_appointment" FromRole="Appointment" ToRole="Disease" />
           <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Appointment1" FromRole="Appointment" ToRole="Recipe" />
@@ -547,7 +590,8 @@
           <Property Name="IDDiagnosis" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK_disease_appointment" FromRole="Disease" ToRole="Appointment" />
           <NavigationProperty Name="Diagnosis" Relationship="Self.FK_disease_diagnosis" FromRole="Disease" ToRole="Diagnosis" />
-          <NavigationProperty Name="SickList" Relationship="Self.FK_SickList_Disease" FromRole="Disease" ToRole="SickList" />
+          <NavigationProperty Name="SickList" Relationship="Self.FK_sick_list_disease" FromRole="Disease" ToRole="SickList" />
+          <NavigationProperty Name="SickList1" Relationship="Self.FK_SickList_Disease" FromRole="Disease" ToRole="SickList" />
         </EntityType>
         <EntityType Name="DocResearch">
           <Key>
@@ -572,14 +616,15 @@
           <Property Name="IDSector" Type="Int32" Nullable="false" />
           <Property Name="IDSeparation" Type="Int32" Nullable="false" />
           <Property Name="Cabinet" Type="Int32" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="valuable" Type="Int32" />
           <NavigationProperty Name="Appointment" Relationship="Self.FK_Appointment_Doctors" FromRole="Doctors" ToRole="Appointment" />
+          <NavigationProperty Name="Appointment1" Relationship="Self.FK_Appointment_Doctors1" FromRole="Doctors" ToRole="Appointment" />
           <NavigationProperty Name="DocResearch" Relationship="Self.FK_DocResearch_Doctors" FromRole="Doctors" ToRole="DocResearch" />
           <NavigationProperty Name="Sector" Relationship="Self.FK_Doctors_Sector" FromRole="Doctors" ToRole="Sector" />
           <NavigationProperty Name="Separation" Relationship="Self.FK_doctors_separation" FromRole="Doctors" ToRole="Separation" />
           <NavigationProperty Name="Specialization" Relationship="Self.FK_doctors_specialization" FromRole="Doctors" ToRole="Specialization" />
-          <Property Name="valuable" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Drug">
           <Key>
@@ -683,16 +728,6 @@
           <Property Name="Separation1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Doctors" Relationship="Self.FK_doctors_separation" FromRole="Separation" ToRole="Doctors" />
         </EntityType>
-        <EntityType Name="SickList">
-          <Key>
-            <PropertyRef Name="IDSickList" />
-          </Key>
-          <Property Name="IDSickList" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDDisease" Type="Int32" Nullable="false" />
-          <Property Name="SlOpen" Type="DateTime" Precision="0" />
-          <Property Name="SlClose" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Disease" Relationship="Self.FK_SickList_Disease" FromRole="SickList" ToRole="Disease" />
-        </EntityType>
         <EntityType Name="Specialization">
           <Key>
             <PropertyRef Name="IDSpecialization" />
@@ -711,7 +746,31 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="SickList">
+          <Key>
+            <PropertyRef Name="IDSickList" />
+            <PropertyRef Name="IDDisease" />
+          </Key>
+          <Property Name="IDSickList" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDDisease" Type="Int32" Nullable="false" />
+          <Property Name="SlOpen" Type="DateTime" Precision="0" />
+          <Property Name="SlClose" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Disease" Relationship="Self.FK_sick_list_disease" FromRole="SickList" ToRole="Disease" />
+          <NavigationProperty Name="Disease1" Relationship="Self.FK_SickList_Disease" FromRole="SickList" ToRole="Disease" />
+        </EntityType>
         <Association Name="FK_Appointment_Doctors">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="IDDoc" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="IDDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Doctors1">
           <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -780,6 +839,18 @@
             </Principal>
             <Dependent Role="Disease">
               <PropertyRef Name="IDDiagnosis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sick_list_disease">
+          <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
+          <End Role="SickList" Type="Self.SickList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="IDDisease" />
+            </Principal>
+            <Dependent Role="SickList">
+              <PropertyRef Name="IDDisease" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -927,7 +998,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="clinicEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Appointment" EntityType="Self.Appointment" />
           <EntitySet Name="Diagnosis" EntityType="Self.Diagnosis" />
           <EntitySet Name="Disease" EntityType="Self.Disease" />
@@ -943,10 +1014,14 @@
           <EntitySet Name="ResearchAppointment" EntityType="Self.ResearchAppointment" />
           <EntitySet Name="Sector" EntityType="Self.Sector" />
           <EntitySet Name="Separation" EntityType="Self.Separation" />
-          <EntitySet Name="SickList" EntityType="Self.SickList" />
           <EntitySet Name="Specialization" EntityType="Self.Specialization" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="SickList" EntityType="Self.SickList" />
           <AssociationSet Name="FK_Appointment_Doctors" Association="Self.FK_Appointment_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Doctors1" Association="Self.FK_Appointment_Doctors1">
             <End Role="Doctors" EntitySet="Doctors" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
@@ -969,6 +1044,10 @@
           <AssociationSet Name="FK_disease_diagnosis" Association="Self.FK_disease_diagnosis">
             <End Role="Diagnosis" EntitySet="Diagnosis" />
             <End Role="Disease" EntitySet="Disease" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sick_list_disease" Association="Self.FK_sick_list_disease">
+            <End Role="Disease" EntitySet="Disease" />
+            <End Role="SickList" EntitySet="SickList" />
           </AssociationSet>
           <AssociationSet Name="FK_SickList_Disease" Association="Self.FK_SickList_Disease">
             <End Role="Disease" EntitySet="Disease" />
@@ -1079,7 +1158,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище clinicModelContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище clinicModelContainer" CdmEntityContainer="clinicEntities1">
           <EntitySetMapping Name="Appointment">
             <EntityTypeMapping TypeName="clinicModel.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
@@ -1119,7 +1198,6 @@
           <EntitySetMapping Name="Doctors">
             <EntityTypeMapping TypeName="clinicModel.Doctors">
               <MappingFragment StoreEntitySet="Doctors">
-                <ScalarProperty Name="valuable" ColumnName="valuable" />
                 <ScalarProperty Name="IDDoc" ColumnName="IDDoc" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1130,6 +1208,7 @@
                 <ScalarProperty Name="Cabinet" ColumnName="Cabinet" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="valuable" ColumnName="valuable" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1228,16 +1307,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SickList">
-            <EntityTypeMapping TypeName="clinicModel.SickList">
-              <MappingFragment StoreEntitySet="SickList">
-                <ScalarProperty Name="IDSickList" ColumnName="IDSickList" />
-                <ScalarProperty Name="IDDisease" ColumnName="IDDisease" />
-                <ScalarProperty Name="SlOpen" ColumnName="SlOpen" />
-                <ScalarProperty Name="SlClose" ColumnName="SlClose" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Specialization">
             <EntityTypeMapping TypeName="clinicModel.Specialization">
               <MappingFragment StoreEntitySet="Specialization">
@@ -1254,6 +1323,16 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SickList">
+            <EntityTypeMapping TypeName="clinicModel.SickList">
+              <MappingFragment StoreEntitySet="SickList">
+                <ScalarProperty Name="IDSickList" ColumnName="IDSickList" />
+                <ScalarProperty Name="IDDisease" ColumnName="IDDisease" />
+                <ScalarProperty Name="SlOpen" ColumnName="SlOpen" />
+                <ScalarProperty Name="SlClose" ColumnName="SlClose" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
